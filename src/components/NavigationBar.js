@@ -1,8 +1,11 @@
 import "../resources/styles/NavigationBar.css";
-
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 function NavigationBar() {
+  const navigateTo = useNavigate();
+  const [loginStatus, setLoginStatus] = useState(false);
+
   return (
     <div className="container-fluid ">
       <nav className="navigation-bar">
@@ -18,24 +21,41 @@ function NavigationBar() {
         </div>
         <div className="search-form">
           <form>
-            <div class="col-auto">
-              <label for="inputPassword2" class="visually-hidden">
-                Password
-              </label>
+            <div className="form-items">
               <input
-                type="password"
-                class="form-control"
-                id="inputPassword2"
-                placeholder="Password"
+                type="text"
+                className="form-control"
+                placeholder="search..."
               />
-            </div>
-            <div class="col-auto">
-              <button type="submit" class="btn btn-primary mb-3">
-                Confirm identity
+              <button type="submit" className="btn btn-primary mb-3">
+                <i className="bi bi-search"></i>
               </button>
             </div>
           </form>
         </div>
+        {!loginStatus && (
+          <div className="login-signup">
+            <button
+              type="button"
+              className="btn btn-light"
+              onClick={() => {
+                navigateTo("/login");
+              }}
+            >
+              Log in
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                navigateTo("/signup");
+              }}
+            >
+              Sign up
+            </button>
+          </div>
+        )}
+        {loginStatus && <i class="bi bi-person-fill profile-icon"></i>}
       </nav>
     </div>
   );
